@@ -1,0 +1,7 @@
+<h1>user<%= @tasklist.id %> 詳細ページ</h1>
+
+<p><%= @tasklist.content %></p>
+
+<%= link_to '戻る', tasklist_path %>
+<%= link_to '編集する', edit_tasklist_path(@tasklist) %>
+<%= link_to 'このメッセージを削除する', @tasklist, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
