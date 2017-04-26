@@ -1,10 +1,11 @@
 class TasklistsController < ApplicationController
+   before_action :set_tasklist, only: [:show, :edit, :update, :destroy]
+   
   def index
     @tasklist = Tasklist.all
   end
   
   def show
-    @tasklist = Tasklist.find(params[:id])
   end
   
   def new
@@ -18,19 +19,15 @@ class TasklistsController < ApplicationController
       flash[:success] = '投稿できました。'
       redirect_to @tasklist
     else
-      flash.now[danger] = '投稿出来ませんでした。'
+      flash.now[:danger] = '投稿出来ませんでした。'
       render :new
     end
   end
 
   def edit
-     @tasklist = Tasklist.find(params[:id])
-
   end
   
   def update
-    @tasklist = Tasklist.find(params[:id])
-
     if @tasklist.update(tasklist_params)
       flash[:success] = '正常に更新されました'
       redirect_to @tasklist
@@ -41,7 +38,6 @@ class TasklistsController < ApplicationController
   end
   
   def destroy
-    @tasklist = Tasklist.find(params[:id])
     @tasklist.destroy
 
     flash[:success] = '正常に削除されました'
@@ -50,7 +46,11 @@ class TasklistsController < ApplicationController
   
   private
   
+  def set_tasklist
+    @tasklist = Tasklist.find(params[:id])
+  end
+  
   def tasklist_params
-    params.require(:tasklist).permit(:content)
+    params.require(:tasklist).permit(:content, :title)
   end
 end
